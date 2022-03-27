@@ -9,12 +9,17 @@
         <h6 class="m-0 font-weight-bold text-primary">Add Category</h6>
     </div>
     <div class="card-body">
-
+    <?php $validation = \Config\Services::validation(); ?>
     <!-- <form class="form"> -->
-        <?php echo form_open('categorycontroller/save'); ?>
+        <?php echo form_open('categorycontroller/save',['id'=>"category_create"]); ?>
         <div class="form-group">
             <label for="category name">Name</label>
-            <?php echo form_input(array('type'=>'text','name'=>'name','id'=>'name',"class"=>'form-control',"placeholder"=>"Category Name")) ?>
+            <?php echo form_input(array('type'=>'text','name'=>'name','id'=>'name',"class"=>'form-control',"placeholder"=>"Category Name",'value'=>(!empty($_REQUEST['name'])?$_REQUEST['name']:''))) ?>
+            <?php if($validation->getError('name')) {?>
+            <div class='mt-2' style="color: red;">
+              <?= $error = $validation->getError('name'); ?>
+            </div>
+        <?php }?>
         </div>
         <input type="submit" name="add_category" class="btn btn-primary">
     <!-- </form> -->

@@ -49,9 +49,10 @@
 
     <!-- Core plugin JavaScript-->
     <script src="/asset/vendor/jquery-easing/jquery.easing.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="/asset/js/sb-admin-2.min.js"></script>
+    <script src="asset/js/main.js"></script>
 
 </body>
 
