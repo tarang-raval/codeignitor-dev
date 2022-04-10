@@ -105,4 +105,72 @@ class CategoryController extends BaseController
 
    // }
     }
+    // http://localhost:8080/categorycontroller/edit/{id}? name='sss'
+function edit($id){
+         
+        //echo $id;
+         $id=$this->request->uri->getSegment(3);
+       // echo $this->request->getVar('name');
+       $model = model(Category::class);
+       // select * from categoer where id=1
+       $data['category']=$model->find($id);
+       $data['page_title']="Category";
+       $data['validation']=new stdClass();
+       echo view ('layout/header',$data);
+       echo view ('category/create',$data);
+       echo view('layout/footer');
+
+
+
+
+    }
+    function update(){
+
+        $model = model(Category::class);
+        helper(['form', 'url']);
+        // select * from categtory where category_name="abc" and id!="5"
+        $id=$this->request->getVar('id');
+        $input = $this->validate([
+            'name' => [
+                'rules'  => 'required|is_unique[categories.category_name,id,'.$id.']',
+                'errors' => [
+                    'required' => 'You must be enter category name.',
+                    'is_unique'=>"category name is alrady available."
+                ],
+            ],
+        ]);
+
+        if (!$input) {
+            $data['page_title']="Category";
+            $data['validation']=$this->validator;
+            echo view ('layout/header',$data);
+            echo view ('category/create',$data);
+            echo view('layout/footer');
+            
+        }else{
+            $name=$this->request->getVar('name');
+            $data2=['category_name'=>$name];
+            
+            //$this->db->update('mytable', $data);
+            $model->update($id,$data2);
+            return redirect()->to('/categorycontroller/index');
+        }
+
+
+    }
+    function delete($id){
+
+        $category=new Category();
+        if($category->find($id)){
+            // delete from category where id=
+            if($category->where('id',$id)->delete()){
+                return redirect()->to('/categorycontroller/index');
+            }
+        }else{
+            return redirect()->to('/categorycontroller/index');
+        }
+        
+
+
+    }
 }

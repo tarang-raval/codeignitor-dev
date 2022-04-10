@@ -36,7 +36,10 @@
                         ?>
                         <tr>
                             <td><?php echo $category['category_name'] ?></td>
-                            <td><a href="#">Edit</a></td>
+                            <td>
+                            <?php echo anchor('categorycontroller/edit/'.$category['id'], 'Edit', array('title' => '',"class"=>"")); ?>
+                            <?php echo anchor('categorycontroller/delete/'.$category['id'], 'Delete', array('title' => '',"class"=>"")); ?>
+                        </td>
                         </tr>
                         <?php
                         }
