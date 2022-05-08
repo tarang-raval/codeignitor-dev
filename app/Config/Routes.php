@@ -38,6 +38,14 @@ $routes->post('/category/update', 'CategoryController::save',['as'=>'category.sa
 $routes->get('/category/edit/(:num)', 'CategoryController::edit/$1');
 //$routes->add('/category/edit/(:num)/(:num)', 'CategoryController::edit/$2/$1');
 
+$routes->get('MigrationIndex','Migrate::index');
+$routes->get('createMigration','Migrate::CreateMigration');
+
+/*$route['MigrationIndex'] = 'Migrate/index';
+$route['createMigration'] = 'Migrate/CreateMigration';
+$route['undoMigration'] = 'Migrate/undoMigration';
+$route['resetMigration'] = 'Migrate/resetMigration';
+*/
 
 /*
  * --------------------------------------------------------------------
