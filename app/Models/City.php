@@ -11,7 +11,7 @@ class City extends Model
     protected $primaryKey       = 'city_id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
-    protected $returnType       = 'array';
+    protected $returnType       = \App\Entities\CityEntity::class;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['city_name'];
@@ -35,8 +35,8 @@ class City extends Model
     protected $cleanValidationRules = true;
 
     // Callbacks
-    protected $allowCallbacks = false;
-    protected $beforeInsert   = [];
+    protected $allowCallbacks = true;
+    protected $beforeInsert   = ['beforecityinsert'];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
@@ -44,4 +44,39 @@ class City extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+     function beforecityinsert(array $data){
+         
+        $data['data']['city_name']="CITY_".$data['data']['city_name'];
+        return $data;
+     }
+
+
+     function getallData(){
+            $r=$this->db->query('select * from city');
+            return $r->getResultArray();
+     }
+     function addtrans(){
+         $status;
+         try{
+         $countryModel=new Country();
+        $this->db->transBegin();
+
+        $this->insert(['city_name'=>'askjdasf']);
+        $countryModel->insert(['name'=>1923]);
+        if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
+            
+            
+        } else {
+            $this->db->transCommit();
+            $status=1;
+        } 
+        }
+        catch(\Exception $exception){
+            return $exception->getMessage();
+        }
+        return $status;
+     }
+     
 }
